@@ -1,0 +1,14 @@
+{
+  "name": "domparser",
+  "repo": "bredele/domparser",
+  "description": "Parser HTML/XML string",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}
