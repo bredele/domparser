@@ -4,12 +4,12 @@
  * @api privae
  */
 
-var Emitter = require('component-emitter');
+var states = require('component-states');
 
 
 var map = {
-	'<' : 'tag open',
-	'>' : 'tag close'
+  '<' : 'open',
+  '>' : 'close'
 };
 
 
@@ -26,13 +26,29 @@ module.exports = DomParser;
  */
 
 function DomParser(str) {
-	if(!(this instanceof DomParser)) return new DomParser(str);
-
-	if(str) this.parse(str);
+  if(!(this instanceof DomParser)) return new DomParser(str);
+  this.states = states('data', {
+    'data' : [
+      ['open', function(val){
+        //console.log('open');
+      },'tag open'],
+      ['token', function(val){
+        console.log('markup:', val);
+      }]
+    ],
+    'tag open': [
+      ['token', function(val){
+        console.log('token:', val);
+      }],
+      ['close', function(val) {
+        //console.log('close');
+      }, 'data']
+    ]
+  });
+  if(str) this.parse(str);
 }
 
 
-Emitter(DomParser.prototype);
 
 
 /**
@@ -41,22 +57,22 @@ Emitter(DomParser.prototype);
  * @api private
  */
 DomParser.prototype.parse = function(str) {
-	var cache = '';
-	for(var i = 0, l = str.length; i < l; i++) {
-		var character = str[i];
-		var topic = map[character];
-		if(topic) {
-			this.emit(topic);
-			if(cache) {
-				this.emit('token', cache);
-				cache = '';
-			}
-			continue;
-		}
-		cache += character;
-	}
+  var cache = '';
+  for(var i = 0, l = str.length; i < l; i++) {
+    var character = str[i];
+    var topic = map[character];
+    if(topic) {
+      this.states.emit(topic);
+      if(cache) {
+        this.states.emit('token', cache);
+        cache = '';
+      }
+      continue;
+    }
+    cache += character;
+  }
 };
 
 // DomParser.use = function() {
-	
+  
 // };
