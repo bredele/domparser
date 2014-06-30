@@ -4,7 +4,7 @@
  * @api privae
  */
 
-var states = require('component-states');
+var states = require('mood');
 
 
 var map = {
