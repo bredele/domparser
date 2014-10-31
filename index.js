@@ -6,7 +6,7 @@ var Node = require('./lib/node');
  * @api privae
  */
 
-var states = require('component-states');
+var states = require('mood');
 
 
 var map = {
@@ -77,3 +77,4 @@ DomParser.prototype.parse = function(str) {
     cache += character;
   }
 };
+
