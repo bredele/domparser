@@ -1,3 +1,5 @@
+var Node = require('./lib/node');
+
 
 /**
  * Dependencies
@@ -27,21 +29,22 @@ module.exports = DomParser;
 
 function DomParser(str) {
   if(!(this instanceof DomParser)) return new DomParser(str);
+  this.root = new Node();
   this.states = states('data', {
     'data' : [
       ['open', function(val){
-        //console.log('open');
+
       },'tag open'],
       ['token', function(val){
-        console.log('markup:', val);
+
       }]
     ],
     'tag open': [
       ['token', function(val){
-        console.log('token:', val);
+
       }],
       ['close', function(val) {
-        //console.log('close');
+
       }, 'data']
     ]
   });
@@ -52,10 +55,12 @@ function DomParser(str) {
 
 
 /**
- * [parse description]
- * @return {[type]} [description]
- * @api private
+ * Parse text/xml.
+ * 
+ * @return {String} str
+ * @api public
  */
+
 DomParser.prototype.parse = function(str) {
   var cache = '';
   for(var i = 0, l = str.length; i < l; i++) {
@@ -72,7 +77,3 @@ DomParser.prototype.parse = function(str) {
     cache += character;
   }
 };
-
-// DomParser.use = function() {
-  
-// };

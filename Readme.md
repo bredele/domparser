@@ -9,9 +9,6 @@
 
     $ component install bredele/domparser
 
-## API
-
-
 
 ## License
 
